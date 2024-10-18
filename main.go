@@ -8,7 +8,6 @@ import (
 	migrate "gumuruh-clinic/migrations"
 	"gumuruh-clinic/routes"
 	"log"
-	"net/http"
 
 	"github.com/gin-gonic/gin"
 	"gorm.io/driver/postgres"
@@ -49,13 +48,8 @@ func main() {
 		c.Next()
 	})
 
-	// Load HTML templates and static files
-	router.LoadHTMLGlob("templates/*")
-	router.Static("/static", "./static")
-
 	// Setup routes
 	routes.SetupAPIRoutes(router, db)
-	setupViewRoutes(router)
 
 	// Start server
 	port := ":8090"
@@ -63,47 +57,4 @@ func main() {
 	if err := router.Run(port); err != nil {
 		log.Fatalf("Failed to start server: %v", err)
 	}
-}
-
-func setupViewRoutes(router *gin.Engine) {
-	// Home page
-	router.GET("/", func(c *gin.Context) {
-		c.File("./templates/index.html")
-	})
-
-	// Auth routes
-	router.GET("/login", func(c *gin.Context) {
-		c.HTML(http.StatusOK, "login.html", nil)
-	})
-
-	router.GET("/register", func(c *gin.Context) {
-		c.HTML(http.StatusOK, "register.html", nil)
-	})
-
-	// Dashboard routes
-	router.GET("/dashboard", func(c *gin.Context) {
-		c.HTML(http.StatusOK, "dashboard.html", nil)
-	})
-
-	// Master data routes
-	router.GET("/admin", func(c *gin.Context) {
-		c.HTML(http.StatusOK, "admin/index.html", nil)
-	})
-
-	router.GET("/pasien", func(c *gin.Context) {
-		c.HTML(http.StatusOK, "pasien/index.html", nil)
-	})
-
-	router.GET("/dokter", func(c *gin.Context) {
-		c.HTML(http.StatusOK, "dokter/index.html", nil)
-	})
-
-	router.GET("/obat", func(c *gin.Context) {
-		c.HTML(http.StatusOK, "obat/index.html", nil)
-	})
-
-	// Kunjungan routes
-	router.GET("/kunjungan", func(c *gin.Context) {
-		c.HTML(http.StatusOK, "kunjungan/index.html", nil)
-	})
 }
