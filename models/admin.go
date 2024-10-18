@@ -12,6 +12,7 @@ type Admin struct {
 	NamaLengkap  string    `json:"nama_lengkap" gorm:"not null"`
 	Email        string    `json:"email" gorm:"unique;not null"`
 	Password     string    `json:"password,omitempty" gorm:"not null"`
+	Role         string    `json:"role" gorm:"default:'admin'"`
 	CreatedTime  time.Time `json:"created_time"`
 	CreatedBy    string    `json:"created_by"`
 	ModifiedTime time.Time `json:"modified_time"`
@@ -19,4 +20,9 @@ type Admin struct {
 	Active       bool      `json:"active" gorm:"default:true"`
 	// Relationships
 	Kunjungans []Kunjungan `json:"kunjungans,omitempty" gorm:"foreignKey:IDAdmin"`
+}
+
+// TableName sets the table name for the Admin struct
+func (Admin) TableName() string {
+	return "admin"
 }
