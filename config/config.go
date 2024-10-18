@@ -3,13 +3,13 @@
 package config
 
 import (
-	"database/sql"
 	"fmt"
 	"log"
 	"os"
 
 	"github.com/joho/godotenv"
-	_ "github.com/lib/pq"
+	"gorm.io/driver/postgres"
+	"gorm.io/gorm"
 )
 
 type Config struct {
@@ -21,7 +21,7 @@ type Config struct {
 	JWTSecret  string
 }
 
-var DB *sql.DB
+var DB *gorm.DB
 
 func LoadConfig() *Config {
 	err := godotenv.Load()
@@ -38,23 +38,17 @@ func LoadConfig() *Config {
 		JWTSecret:  getEnvOrFail("JWT_SECRET"),
 	}
 
-	// Initialize database connection
-	psqlInfo := fmt.Sprintf("host=%s port=%s user=%s password=%s dbname=%s sslmode=disable",
+	// Initialize GORM database connection
+	dsn := fmt.Sprintf("host=%s port=%s user=%s password=%s dbname=%s sslmode=disable",
 		config.DBHost, config.DBPort, config.DBUser, config.DBPassword, config.DBName)
 
-	db, err := sql.Open("postgres", psqlInfo)
+	db, err := gorm.Open(postgres.Open(dsn), &gorm.Config{})
 	if err != nil {
-		log.Fatal(err)
-	}
-
-	// Test the connection
-	err = db.Ping()
-	if err != nil {
-		log.Fatal(err)
+		log.Fatal("Failed to connect to database: ", err)
 	}
 
 	DB = db
-	fmt.Println("Database connected successfully")
+	fmt.Println("Database connected successfully using GORM")
 
 	return config
 }

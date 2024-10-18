@@ -59,7 +59,7 @@ func main() {
 
 	// Start server
 	port := ":8090"
-	log.Printf("Server starting on port %s", port)
+	log.Printf("Server is starting on port %s", port)
 	if err := router.Run(port); err != nil {
 		log.Fatalf("Failed to start server: %v", err)
 	}
@@ -68,9 +68,7 @@ func main() {
 func setupViewRoutes(router *gin.Engine) {
 	// Home page
 	router.GET("/", func(c *gin.Context) {
-		c.HTML(http.StatusOK, "index.html", gin.H{
-			"title": "Gumuruh Clinic",
-		})
+		c.File("./templates/index.html")
 	})
 
 	// Auth routes
