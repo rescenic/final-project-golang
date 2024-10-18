@@ -15,46 +15,7 @@ http://localhost:8090/api
 
 ### Public Routes
 
-#### 1. Register a User
-
-- **Endpoint**: `POST /register`
-- **Request Body**:
-
-  ```json
-  {
-    "id_ktp": "1234567890123456",
-    "nama_lengkap": "John Doe",
-    "email": "johndoe@example.com",
-    "password": "yourpassword",
-    "tanggal_lahir": "2000-01-01",
-    "golongan_darah": "O"
-  }
-  ```
-
-- **Response**:
-  - **201 Created**: User successfully registered.
-  - **400 Bad Request**: Validation errors.
-
-#### 2. Login
-
-- **Endpoint**: `POST /login`
-- **Request Body**:
-
-  ```json
-  {
-    "email": "johndoe@example.com",
-    "password": "yourpassword",
-    "role": "pasien" // or "admin", "dokter"
-  }
-  ```
-
-- **Response**:
-  - **200 OK**: Returns a JWT token.
-  - **401 Unauthorized**: Invalid credentials.
-
-### Protected Routes (Requires JWT Token)
-
-#### 3. Admin Routes
+#### 1. Admin Routes
 
 ##### Create Admin
 
@@ -105,7 +66,25 @@ http://localhost:8090/api
 - **Response**:
   - **200 OK**: Admin successfully deleted.
 
-#### 4. Pasien Routes
+#### 2. Login
+
+- **Endpoint**: `POST /login`
+- **Request Body**:
+
+  ```json
+  {
+    "email": "admin@domain.com",
+    "password": "password123"
+  }
+  ```
+
+- **Response**:
+  - **200 OK**: Returns a JWT token.
+  - **401 Unauthorized**: Invalid credentials.
+
+### Protected Routes (Requires JWT Token)
+
+#### 3. Pasien Routes
 
 ##### Create Pasien
 
@@ -145,7 +124,7 @@ http://localhost:8090/api
 - **Response**:
   - **200 OK**: Pasien successfully deleted.
 
-#### 5. Dokter Routes
+#### 4. Dokter Routes
 
 ##### Create Dokter
 
@@ -185,7 +164,7 @@ http://localhost:8090/api
 - **Response**:
   - **200 OK**: Dokter successfully deleted.
 
-#### 6. Obat Routes
+#### 5. Obat Routes
 
 ##### Create Obat
 
@@ -225,7 +204,7 @@ http://localhost:8090/api
 - **Response**:
   - **200 OK**: Obat successfully deleted.
 
-#### 7. Kunjungan Routes
+#### 6. Kunjungan Routes
 
 ##### Create Kunjungan
 
