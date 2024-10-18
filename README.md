@@ -3,7 +3,9 @@
 ## Base URL
 
 ```sh
-http://localhost:8090/api
+Localhost: http://localhost:8090/api
+
+Online: https://finalproject.rescenic.xyz/api
 ```
 
 ## Authentication
