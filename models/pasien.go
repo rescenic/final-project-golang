@@ -21,3 +21,7 @@ type Pasien struct {
 	// Relationships
 	Kunjungans []Kunjungan `json:"kunjungans,omitempty" gorm:"foreignKey:IDPasien"`
 }
+
+func (Pasien) TableName() string {
+	return "pasien"
+}

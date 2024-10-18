@@ -16,3 +16,7 @@ type Obat struct {
 	// Relationships
 	Kunjungans []Kunjungan `json:"kunjungans,omitempty" gorm:"foreignKey:IDObat"`
 }
+
+func (Obat) TableName() string {
+	return "obat"
+}
