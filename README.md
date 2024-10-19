@@ -3,7 +3,12 @@
 ## Base URL
 
 ```sh
-Localhost: http://localhost:8090/api
+Localhost:
+git clone https://github.com/rescenic/final-project-golang.git gumuruh-clinic
+cd gumuruh-clinic
+go run main.go
+
+http://localhost:8090/api
 
 Online: https://finalproject.rescenic.xyz/api
 ```
