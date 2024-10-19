@@ -4,7 +4,7 @@
 		"name": "Gumuruh Clinic API",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "11724952",
-		"_collection_link": "https://rescenic.postman.co/workspace/Rescenic%2C-Ltd.~921be1be-1dac-49e7-86bc-07abfad55b66/collection/11724952-58e327e0-b98f-4a18-8b43-1059c73e7790?action=share&source=collection_link&creator=11724952"
+		"_collection_link": "https://rescenic.postman.co/workspace/Rescenic%252C-Ltd.~921be1be-1dac-49e7-86bc-07abfad55b66/collection/11724952-58e327e0-b98f-4a18-8b43-1059c73e7790?action=share&source=collection_link&creator=11724952"
 	},
 	"item": [
 		{
@@ -72,7 +72,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"name\": \"Admin Name\",\n\t\"email\": \"admin@example.com\",\n\t\"password\": \"adminpassword\"\n}"
+							"raw": "{\n    \"id_ktp\": \"1234567890123456\",\n\t\"nama_lengkap\": \"Lesthi Purwanti, S.Pd.\",\n\t\"email\": \"plesthi@yahoo.com\",\n\t\"password\": \"password123\"\n}"
 						},
 						"url": {
 							"raw": "{{base_url}}/api/admin",
@@ -95,7 +95,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxLCJlbWFpbCI6ImFkbWluQHJlc2NlbmljLnh5eiIsInJvbGUiOiJhZG1pbiIsImV4cCI6MTcyOTMzNzg1OSwiaWF0IjoxNzI5MjUxNDU5fQ.oNQHEZtLe3C_OhtWzI6112IChdib_8BZnV3CbyAR0K0",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFkbWluQHJlc2NlbmljLnh5eiIsImV4cCI6MTcyOTQwNTM3MSwiaWF0IjoxNzI5MzE4OTcxLCJuYW1hX2xlbmdrYXAiOiJNdWhhbW1hZCBSaWR3YW4gSGFraW0sIFMuVC4sIENQSVRBIiwicm9sZSI6ImFkbWluIiwidXNlcl9pZCI6MX0.YiMhVz3d9Dz3hekUw5CGpLqVuqH9qlYSgz5iOyKwf6M",
 									"type": "string"
 								}
 							]
@@ -233,17 +233,17 @@
 			]
 		},
 		{
-			"name": "Pasien",
+			"name": "Dokter",
 			"item": [
 				{
-					"name": "Create Pasien",
+					"name": "Create Dokter",
 					"request": {
 						"auth": {
 							"type": "bearer",
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxLCJlbWFpbCI6ImFkbWluQHJlc2NlbmljLnh5eiIsInJvbGUiOiJhZG1pbiIsImV4cCI6MTcyOTM0NjcwNSwiaWF0IjoxNzI5MjYwMzA1fQ.AMepKeQF-s4CBA6ppKK5Z_ZjAFAx4OCznqCYJDI7caA",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFkbWluQHJlc2NlbmljLnh5eiIsImV4cCI6MTcyOTQwNTM3MSwiaWF0IjoxNzI5MzE4OTcxLCJuYW1hX2xlbmdrYXAiOiJNdWhhbW1hZCBSaWR3YW4gSGFraW0sIFMuVC4sIENQSVRBIiwicm9sZSI6ImFkbWluIiwidXNlcl9pZCI6MX0.YiMhVz3d9Dz3hekUw5CGpLqVuqH9qlYSgz5iOyKwf6M",
 									"type": "string"
 								}
 							]
@@ -258,7 +258,193 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"id_ktp\": \"1234567890333337\",\n    \"nama_lengkap\": \"M Ridwan H\",\n    \"email\": \"admin@rescenic.id\",\n    \"password\": \"securepassword\",\n    \"tanggal_lahir\": \"1990-01-01T00:00:00Z\",\n    \"golongan_darah\": \"O+\"\n}\n"
+							"raw": "{\n    \"id_ktp\": \"1234567890123456\",\n\t\"nama_lengkap\": \"Lesthi Purwanti, S.Pd.\",\n\t\"email\": \"plesthi@yahoo.com\",\n\t\"password\": \"password123\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/dokter",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"dokter"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "List Dokter",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFkbWluQHJlc2NlbmljLnh5eiIsImV4cCI6MTcyOTQwNTM3MSwiaWF0IjoxNzI5MzE4OTcxLCJuYW1hX2xlbmdrYXAiOiJNdWhhbW1hZCBSaWR3YW4gSGFraW0sIFMuVC4sIENQSVRBIiwicm9sZSI6ImFkbWluIiwidXNlcl9pZCI6MX0.YiMhVz3d9Dz3hekUw5CGpLqVuqH9qlYSgz5iOyKwf6M",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/dokter",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"dokter"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Dokter by ID",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxLCJlbWFpbCI6ImFkbWluQHJlc2NlbmljLnh5eiIsInJvbGUiOiJhZG1pbiIsImV4cCI6MTcyOTMzNzg1OSwiaWF0IjoxNzI5MjUxNDU5fQ.oNQHEZtLe3C_OhtWzI6112IChdib_8BZnV3CbyAR0K0",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/dokter/1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"dokter",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Dokter by ID",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxLCJlbWFpbCI6ImFkbWluQHJlc2NlbmljLnh5eiIsInJvbGUiOiJhZG1pbiIsImV4cCI6MTcyOTMzOTUwOCwiaWF0IjoxNzI5MjUzMTA4fQ.2DqfH1mqq-7Bi2IrCzQKh64NnRDlU9IAR_vNM7Gf-XU",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"id_ktp\": \"1234567890123456\",\n\t\"nama_lengkap\": \"Muhammad Ridwan Hakim\",\n\t\"email\": \"plesthi@yahoo.com\",\n\t\"password\": \"password123\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/dokter/1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"dokter",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Dokter by ID",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxLCJlbWFpbCI6ImFkbWluQHJlc2NlbmljLnh5eiIsInJvbGUiOiJhZG1pbiIsImV4cCI6MTcyOTMzOTUwOCwiaWF0IjoxNzI5MjUzMTA4fQ.2DqfH1mqq-7Bi2IrCzQKh64NnRDlU9IAR_vNM7Gf-XU",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/dokter/1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"dokter",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Pasien",
+			"item": [
+				{
+					"name": "Create Pasien",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFkbWluQHJlc2NlbmljLnh5eiIsImV4cCI6MTcyOTQwNTM3MSwiaWF0IjoxNzI5MzE4OTcxLCJuYW1hX2xlbmdrYXAiOiJNdWhhbW1hZCBSaWR3YW4gSGFraW0sIFMuVC4sIENQSVRBIiwicm9sZSI6ImFkbWluIiwidXNlcl9pZCI6MX0.YiMhVz3d9Dz3hekUw5CGpLqVuqH9qlYSgz5iOyKwf6M",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"id_ktp\": \"1234567890333335\",\n    \"nama_lengkap\": \"Lesthi Purwanti\",\n    \"email\": \"admin2@rescenic.id\",\n    \"password\": \"securepassword\",\n    \"tanggal_lahir\": \"1990-01-01T00:00:00Z\",\n    \"golongan_darah\": \"O+\"\n}\n"
 						},
 						"url": {
 							"raw": "{{base_url}}/api/pasien",
@@ -611,7 +797,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxLCJlbWFpbCI6ImFkbWluQHJlc2NlbmljLnh5eiIsInJvbGUiOiJhZG1pbiIsImV4cCI6MTcyOTMzOTUwOCwiaWF0IjoxNzI5MjUzMTA4fQ.2DqfH1mqq-7Bi2IrCzQKh64NnRDlU9IAR_vNM7Gf-XU",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFkbWluQHJlc2NlbmljLnh5eiIsImV4cCI6MTcyOTQwMzIzNiwiaWF0IjoxNzI5MzE2ODM2LCJuYW1hX2xlbmdrYXAiOiJNdWhhbW1hZCBSaWR3YW4gSGFraW0sIFMuVC4sIENQSVRBIiwicm9sZSI6ImFkbWluIiwidXNlcl9pZCI6MX0.At2e5obqtJqrMAOvWuS5BhLhwF5BarX5vQQ2eCWtsPA",
 									"type": "string"
 								}
 							]
@@ -626,7 +812,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"pasien_id\": 1,\n\t\"dokter_id\": 1,\n\t\"diagnosa\": \"Diagnosa Example\",\n\t\"resep_obat\": \"Obat Example\"\n}"
+							"raw": "{\n    \"admin_id\": 1,\n\t\"pasien_id\": 1,\n\t\"dokter_id\": 1,\n    \"riwayat_penyakit\": \"Sakit Batuk\",\n\t\"diagnosa\": \"Sakit Asthma\",\n\t\"resep_obat\": \"Obat Generik\"\n}"
 						},
 						"url": {
 							"raw": "{{base_url}}/api/kunjungan",
@@ -649,7 +835,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxLCJlbWFpbCI6ImFkbWluQHJlc2NlbmljLnh5eiIsInJvbGUiOiJhZG1pbiIsImV4cCI6MTcyOTMzOTUwOCwiaWF0IjoxNzI5MjUzMTA4fQ.2DqfH1mqq-7Bi2IrCzQKh64NnRDlU9IAR_vNM7Gf-XU",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFkbWluQHJlc2NlbmljLnh5eiIsImV4cCI6MTcyOTQwMzIzNiwiaWF0IjoxNzI5MzE2ODM2LCJuYW1hX2xlbmdrYXAiOiJNdWhhbW1hZCBSaWR3YW4gSGFraW0sIFMuVC4sIENQSVRBIiwicm9sZSI6ImFkbWluIiwidXNlcl9pZCI6MX0.At2e5obqtJqrMAOvWuS5BhLhwF5BarX5vQQ2eCWtsPA",
 									"type": "string"
 								}
 							]
@@ -748,7 +934,7 @@
 	"variable": [
 		{
 			"key": "base_url",
-			"value": "http://localhost:8090"
+			"value": "https://finalproject.rescenic.xyz/"
 		},
 		{
 			"key": "token",
