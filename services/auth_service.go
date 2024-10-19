@@ -43,12 +43,13 @@ func (s *AuthService) Login(req *models.LoginRequest) (*models.LoginResponse, er
 		return nil, errors.New("invalid credentials")
 	}
 
-	// Generate token and pass the role
-	token, err := s.generateToken(admin.ID, admin.Email, admin.Role)
+	// Generate token, passing "nama_lengkap"
+	token, err := s.generateToken(admin.ID, admin.Email, admin.Role, admin.NamaLengkap)
 	if err != nil {
 		return nil, err
 	}
 
+	// Return the login response with the token
 	return &models.LoginResponse{
 		Token:  token,
 		ID:     admin.ID,
@@ -59,17 +60,17 @@ func (s *AuthService) Login(req *models.LoginRequest) (*models.LoginResponse, er
 	}, nil
 }
 
-func (s *AuthService) generateToken(userID uint, email, role string) (string, error) {
+func (s *AuthService) generateToken(userID uint, email, role string, namaLengkap string) (string, error) {
 	expirationTime := time.Now().Add(24 * time.Hour)
 
-	claims := &models.JWTClaim{
-		UserID: userID,
-		Email:  email,
-		Role:   role, // Set the role dynamically
-		StandardClaims: jwt.StandardClaims{
-			ExpiresAt: expirationTime.Unix(),
-			IssuedAt:  time.Now().Unix(),
-		},
+	// Include "nama_lengkap" in the claims
+	claims := jwt.MapClaims{
+		"user_id":      userID,
+		"email":        email,
+		"role":         role,
+		"nama_lengkap": namaLengkap,
+		"exp":          expirationTime.Unix(),
+		"iat":          time.Now().Unix(),
 	}
 
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)

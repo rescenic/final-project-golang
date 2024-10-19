@@ -4,10 +4,12 @@ package controllers
 
 import (
 	"fmt"
+	"gumuruh-clinic/middleware"
 	"gumuruh-clinic/models"
 	"gumuruh-clinic/services"
 	"net/http"
 	"strconv"
+	"time"
 
 	"github.com/gin-gonic/gin"
 	"gorm.io/gorm"
@@ -76,24 +78,73 @@ func (c *PasienController) Get(ctx *gin.Context) {
 
 func (c *PasienController) Update(ctx *gin.Context) {
 	id := ctx.Param("id")
-	var pasien models.Pasien
+	var existingPasien models.Pasien
 
-	if err := c.db.First(&pasien, id).Error; err != nil {
+	// Find the existing pasien by ID
+	if err := c.db.First(&existingPasien, id).Error; err != nil {
 		ctx.JSON(http.StatusNotFound, gin.H{"error": "Pasien not found"})
 		return
 	}
 
-	if err := ctx.ShouldBindJSON(&pasien); err != nil {
+	// Bind the incoming JSON but keep the existing ID
+	var updatedPasien models.Pasien
+	if err := ctx.ShouldBindJSON(&updatedPasien); err != nil {
 		ctx.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
 
-	if err := c.db.Save(&pasien).Error; err != nil {
+	// Ensure the existing ID is preserved
+	updatedPasien.ID = existingPasien.ID
+
+	// If password is updated, hash the new password
+	if updatedPasien.Password != "" && updatedPasien.Password != existingPasien.Password {
+		hashedPassword, err := services.HashPassword(updatedPasien.Password)
+		if err != nil {
+			ctx.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to hash password"})
+			return
+		}
+		updatedPasien.Password = hashedPassword
+	} else {
+		updatedPasien.Password = existingPasien.Password
+	}
+
+	// Keep NoRM consistent
+	updatedPasien.NoRM = existingPasien.NoRM
+
+	// Set active to true if not provided
+	if updatedPasien.Active == false {
+		updatedPasien.Active = true
+	}
+
+	// Get the user from the token
+	userToken, claims, err := middleware.GetUserFromToken(ctx)
+	if err != nil || !userToken.Valid {
+		ctx.JSON(http.StatusUnauthorized, gin.H{"error": "Unauthorized"})
+		return
+	}
+
+	// Set modified_by to the logged-in user
+	if name, ok := claims["nama_lengkap"].(string); ok {
+		updatedPasien.ModifiedBy = name
+	} else {
+		ctx.JSON(http.StatusBadRequest, gin.H{"error": "Unable to extract user information from token"})
+		return
+	}
+
+	// Set modified_time to now
+	updatedPasien.ModifiedTime = time.Now()
+
+	// Keep created_time and created_by consistent
+	updatedPasien.CreatedTime = existingPasien.CreatedTime
+	updatedPasien.CreatedBy = existingPasien.CreatedBy
+
+	// Save the updated pasien
+	if err := c.db.Model(&existingPasien).Updates(updatedPasien).Error; err != nil {
 		ctx.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to update pasien"})
 		return
 	}
 
-	ctx.JSON(http.StatusOK, pasien)
+	ctx.JSON(http.StatusOK, updatedPasien)
 }
 
 func (c *PasienController) Delete(ctx *gin.Context) {
@@ -113,7 +164,7 @@ func (c *PasienController) Delete(ctx *gin.Context) {
 	ctx.JSON(http.StatusOK, gin.H{"message": "Pasien deleted successfully"})
 }
 
-// GetNextNoRM generates the next NoRM value
+// GetNextNoRM generates the next NoRM value without the "RM-" prefix
 func (c *PasienController) GetNextNoRM() (string, error) {
 	var lastPasien models.Pasien
 
@@ -129,13 +180,13 @@ func (c *PasienController) GetNextNoRM() (string, error) {
 	}
 
 	// Ensure lastPasien.NoRM can be converted to an integer
-	lastNoRM, err := strconv.Atoi(lastPasien.NoRM[4:]) // Skip "RM-" prefix
+	lastNoRM, err := strconv.Atoi(lastPasien.NoRM) // No need to skip prefix, full NoRM is numeric
 	if err != nil {
 		fmt.Println("Error converting NoRM to int:", err)
 		return "", err
 	}
 
-	// Increment the last NoRM and format it
-	nextNoRM := fmt.Sprintf("RM-%06d", lastNoRM+1) // Ensure it has leading zeros
+	// Increment the last NoRM and format it as a 6-digit number
+	nextNoRM := fmt.Sprintf("%06d", lastNoRM+1) // Return just the 6 digits
 	return nextNoRM, nil
 }
